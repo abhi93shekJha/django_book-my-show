@@ -1,4 +1,11 @@
 # django_book-my-show
+![Requirements](book_my_show_requirements.png)
+
+![Model1](book_my_show_model1.png)
+
+![Model2](book_my_show_model2.png)
+
+![Model3](book_my_show_model3.png)
 
 ### Few points to remember
 - There is no need to specify id for models, django automatically provides 'id' column to all the models implicitly.
