@@ -1,11 +1,80 @@
 # django_book-my-show
-![Requirements](book_my_show_requirements.png)
+Requirements for bookmyshow
 
-![Model1](book_my_show_model1.png)
+1. Select a city.
+2. A city will have multiple theaters.
+3. A theatre will have multiple halls.
+2. Show list of movies being shown in the city.
+3. We can search a movie.
+3. Filter the movies based on language, Genres, Format (2D, 3D, IMAX), Theaters
+4. We can book tickets by first selecting a movie then clicking on book tickets.
+5. When clicking on booktickets, I can see a list of theaters with show timings. With prices.
+6. Clicking on a show takes us to seat selection.
+7. After seat selection go to payment page.
+8. We can add coupon/promo code on the payment page.
+9. We can pay using various payment options.
 
-![Model2](book_my_show_model2.png)
 
-![Model3](book_my_show_model3.png)
+## Entities
+
+### City
+
+- id: int
+- theaters: Theater[]
+
+### Theater
+
+- id: int
+- halls: Hall[]
+
+### Hall
+
+- id: int
+- shows: Show[]
+- seats: Seat[]
+
+### Seat
+
+- id: int
+- seat_type: SeatType (RECLINER, GOLD, VIP)
+
+### Show
+
+- id: int
+- movie: Movie
+- showSeats: ShowSeat[]
+
+### ShowSeat
+
+- id: int
+- seat: Seat
+- seatStatus: SeatStatus (AVAILABLE, LOCKED, UNAVAILABLE)
+
+### Conceptual entities
+
+#### Payment
+
+- id: int
+- amount: double
+- payment_mode: PaymentMode
+- payment_status: PaymentStatus (PENDING, PAYED, NOT_PAYED)
+- pay_strategy: PaymentStrategy
+
+#### Ticket
+
+- id: int
+- ticket_status: TicketStatus (BOOKED, CANCELLED)
+- payment: Payment
+- show: Show
+- seats: Seat[]
+- user: User
+
+#### User
+
+- id: int
+- name: String
+- password: String
+- email: String
 
 ### Few points to remember
 - There is no need to specify id for models, django automatically provides 'id' column to all the models implicitly.
