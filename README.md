@@ -104,3 +104,5 @@ movie.genres.add(Genres.objects.get(genre=Genre.ACTION), Genres.objects.get(genr
 >>> genre_thriller = Genres.objects.get(genre=Genre.THRILLER)
 >>> genre_action = Genres.objects.get(genre=Genre.ACTION)
 ```
+- ManyToMany do not have on_delete, it is taken care by django internally for the mapping table. If any of the entity in manyToMany field is deleted, django deletes the corresponding rows in intermidiate (mapping) table.
+- We can specify our own mapping table using "through" kwarg, when creating a manyToMany field.
