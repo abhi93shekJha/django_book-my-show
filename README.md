@@ -100,6 +100,20 @@ Requirements for bookmyshow
 }
 ```
 ### Few points to remember
+```python
+class MySerializer(serializers.Serializer):
+    my_field = serializers.CharField()
+
+class AnotherSerializer(serializers.Serializer):
+    my_models = MySerializer(many=True)
+{
+  "my_models": [
+    {"my_field": "value1"},
+    {"my_field": "value2"},
+    {"my_field": "value3"}
+  ]
+}
+```
 - We override 'to_representation' and 'to_internal_value' inside a serializer. Former helps us modify the json being sent in response, while latter is used to modify incoming json payload in request.
 - There is no need to specify id for models, django automatically provides 'id' column to all the models implicitly.
 - If we assign a custom primary key, default id column is removed.
@@ -131,3 +145,6 @@ movie.genres.add(Genres.objects.get(genre=Genre.ACTION), Genres.objects.get(genr
 - ManyToMany do not have on_delete, it is taken care by django internally for the mapping table. If any of the entity in manyToMany field is deleted, django deletes the corresponding rows in intermidiate (mapping) table.
 - We can specify our own mapping table using "through" kwarg, when creating a manyToMany field.
 - When creating a post body, we can subclass from ModelSerializer to directly convert a model to json body. For more customization we can subclass from serializers.Serializer and specify our own custom fields.
+### Points when creating views
+- APIViews should be used when there is an specific task and gives the developer full control to customise the response, with code etc.
+- GenericAPIViews along with mixins removes the boilerplates of creating response object, explicit validation etc. It should be used when CRUD operations are related on a particular model.
