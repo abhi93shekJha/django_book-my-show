@@ -101,6 +101,7 @@ Requirements for bookmyshow
 }
 ```
 ### Few points to remember
+- We override 'to_representation' and 'to_internal_value' inside a serializer. Former helps us modify the json being sent in response, while latter is used to modify incoming json payload in request.
 - There is no need to specify id for models, django automatically provides 'id' column to all the models implicitly.
 - If we assign a custom primary key, default id column is removed.
 - AutoField, makes the column primary key with autoincreament.
