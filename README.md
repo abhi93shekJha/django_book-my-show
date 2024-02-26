@@ -14,63 +14,43 @@ Requirements for bookmyshow
 8. We can add coupon/promo code on the payment page.
 9. We can pay using various payment options.
 
-
 ## Entities
-
 ### City
-
 - id: int
 - theaters: Theater[]
-
 ### Theater
-
 - id: int
 - halls: Hall[]
-
 ### Hall
-
 - id: int
 - shows: Show[]
 - seats: Seat[]
-
 ### Seat
-
 - id: int
 - seat_type: SeatType (RECLINER, GOLD, VIP)
-
 ### Show
-
 - id: int
 - movie: Movie
 - showSeats: ShowSeat[]
-
 ### ShowSeat
-
 - id: int
 - seat: Seat
 - seatStatus: SeatStatus (AVAILABLE, LOCKED, UNAVAILABLE)
-
 ### Conceptual entities
-
 #### Payment
-
 - id: int
 - amount: double
 - payment_mode: PaymentMode
 - payment_status: PaymentStatus (PENDING, PAYED, NOT_PAYED)
 - pay_strategy: PaymentStrategy
-
 #### Ticket
-
 - id: int
 - ticket_status: TicketStatus (BOOKED, CANCELLED)
 - payment: Payment
 - show: Show
 - seats: Seat[]
 - user: User
-
 #### User
-
 - id: int
 - name: String
 - password: String
