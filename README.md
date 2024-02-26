@@ -148,3 +148,5 @@ movie.genres.add(Genres.objects.get(genre=Genre.ACTION), Genres.objects.get(genr
 ### Points when creating views
 - APIViews should be used when there is an specific task and gives the developer full control to customise the response, with code etc.
 - GenericAPIViews along with mixins removes the boilerplates of creating response object, explicit validation etc. It should be used when CRUD operations are related on a particular model.
+- create(self, validate_data) method can be overridden in serializer which is called when serializer.save() is called after validation (is_valid()).
+- update(self, validate_data, instance) method can be overridden in serializer which is called when serializer.save() is called after validation (is_valid()). instance is the model of the serializer.
