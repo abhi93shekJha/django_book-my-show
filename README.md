@@ -66,38 +66,37 @@ Requirements for bookmyshow
   name: "Raj Theater",
   halls:[{
       seats:{
-      sections:3,
-      section_1:{
-            number_of_seats:10,
-            seat_type:"RECLYNER"
-      },
-      section_2:{
-            number_of_seats:40,
-            seat_type:"PLATINUM"
-      },
-      section_3:{
-            number_of_seats:80,
-            seat_type:"GOLD"
-      }
+          num_of_sections:3,
+          sections:[
+              {
+                  number_of_seats:10,
+                  seat_type:"RECLYNER"
+              },
+              {
+                  number_of_seats:40,
+                  seat_type:"PLATINUM"
+              },
+              {
+                  number_of_seats:80,
+                  seat_type:"GOLD"
+              }
+          ]
       }
    },
    {seats:{
-      sections:3,
-      section_1:{
-            number_of_seats:20,
-            seat_type:"RECLYNER"
-      },
-      section_2:{
-            number_of_seats:50,
-            seat_type:"PLATINUM"
-      },
-      section_3:{
-            number_of_seats:80,
-            seat_type:"GOLD"
-      }
+          num_of_sections:2,
+          sections:[
+                {
+                number_of_seats:10,
+                seat_type:"RECLYNER"
+                },
+                {
+                number_of_seats:90,
+                seat_type:"PLATINUM"
+                }
+          ]
       }
   }]
-}
 }
 ```
 ### Few points to remember
