@@ -56,6 +56,50 @@ Requirements for bookmyshow
 - password: String
 - email: String
 
+### APIs needed
+### For admin
+- Django admin for creating cities, movies, Genres. 
+- Post /api/v1/theater - for creating a theater.
+```json
+{
+  city_id: 1,
+  name: "Raj Theater",
+  halls:[{
+      seats:{
+      sections:3,
+      section_1:{
+            number_of_seats:10,
+            seat_type:"RECLYNER"
+      },
+      section_2:{
+            number_of_seats:40,
+            seat_type:"PLATINUM"
+      },
+      section_3:{
+            number_of_seats:80,
+            seat_type:"GOLD"
+      }
+      }
+   },
+   {seats:{
+      sections:3,
+      section_1:{
+            number_of_seats:20,
+            seat_type:"RECLYNER"
+      },
+      section_2:{
+            number_of_seats:50,
+            seat_type:"PLATINUM"
+      },
+      section_3:{
+            number_of_seats:80,
+            seat_type:"GOLD"
+      }
+      }
+  }]
+}
+}
+```
 ### Few points to remember
 - There is no need to specify id for models, django automatically provides 'id' column to all the models implicitly.
 - If we assign a custom primary key, default id column is removed.
@@ -86,3 +130,4 @@ movie.genres.add(Genres.objects.get(genre=Genre.ACTION), Genres.objects.get(genr
 ```
 - ManyToMany do not have on_delete, it is taken care by django internally for the mapping table. If any of the entity in manyToMany field is deleted, django deletes the corresponding rows in intermidiate (mapping) table.
 - We can specify our own mapping table using "through" kwarg, when creating a manyToMany field.
+- When creating a post body, we can subclass from ModelSerializer to directly convert a model to json body. For more customization we can subclass from serializers.Serializer and specify our own custom fields.
