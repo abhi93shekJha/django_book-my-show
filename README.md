@@ -58,7 +58,7 @@ Requirements for bookmyshow
 
 ### APIs needed
 ### For admin
-- Django admin for creating cities, movies, Genres. 
+- Django admin for creating cities, movies, Genres.  (http://127.0.0.1:8000/admin/)
 - Post /api/v1/theater - for creating a theater.  (http://127.0.0.1:8000/api/v1/theater/)
 ```json
 {
