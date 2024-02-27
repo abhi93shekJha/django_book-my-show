@@ -66,7 +66,7 @@ Requirements for bookmyshow
   "name": "Raj Theater",
   "halls":[{
       "seats":{
-          "num_of_sections":3,
+          "number_of_sections":3,
           "sections":[
               {
                   "number_of_seats":10,
@@ -84,7 +84,7 @@ Requirements for bookmyshow
       }
    },
    {"seats":{
-          "num_of_sections":2,
+          "number_of_sections":2,
           "sections":[
                 {
                 "number_of_seats":10,
