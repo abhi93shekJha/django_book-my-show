@@ -11,5 +11,5 @@ class Movie(BaseModel):
     genres = models.ManyToManyField(Genres, related_name='movies')
     format = models.CharField(max_length=20, choices=[(f.name, f.value) for f in F.Format])
     
-    city = models.ForeignKey(City, on_delete=models.DO_NOTHING, related_name = "movies")
+    city = models.ManyToManyField(City, related_name = "movies")
     

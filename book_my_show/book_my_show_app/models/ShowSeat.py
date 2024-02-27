@@ -7,6 +7,6 @@ from ..enums import SeatStatus as SS
 class ShowSeat(BaseModel):
     
     seat = models.OneToOneField(Seat, on_delete=models.CASCADE)
-    seat_status = models.CharField(max_length=20, choices=[(status.value, status.name) for status in SS.SeatStatus])
+    seat_status = models.CharField(max_length=20, choices=[(status.name, status.value) for status in SS.SeatStatus])
     show = models.ForeignKey(Show, on_delete=models.CASCADE, related_name = 'show_seats')
     
