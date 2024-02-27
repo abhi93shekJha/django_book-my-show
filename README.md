@@ -62,37 +62,37 @@ Requirements for bookmyshow
 - Post /api/v1/theater - for creating a theater.
 ```json
 {
-  city_id: 1,
-  name: "Raj Theater",
-  halls:[{
-      seats:{
-          num_of_sections:3,
-          sections:[
+  "city_id": 1,
+  "name": "Raj Theater",
+  "halls":[{
+      "seats":{
+          "num_of_sections":3,
+          "sections":[
               {
-                  number_of_seats:10,
-                  seat_type:"RECLYNER"
+                  "number_of_seats":10,
+                  "seat_type":"RECLYNER"
               },
               {
-                  number_of_seats:40,
-                  seat_type:"PLATINUM"
+                  "number_of_seats":40,
+                  "seat_type":"PLATINUM"
               },
               {
-                  number_of_seats:80,
-                  seat_type:"GOLD"
+                  "number_of_seats":80,
+                  "seat_type":"GOLD"
               }
           ]
       }
    },
-   {seats:{
-          num_of_sections:2,
-          sections:[
+   {"seats":{
+          "num_of_sections":2,
+          "sections":[
                 {
-                number_of_seats:10,
-                seat_type:"RECLYNER"
+                "number_of_seats":10,
+                "seat_type":"RECLYNER"
                 },
                 {
-                number_of_seats:90,
-                seat_type:"PLATINUM"
+                "number_of_seats":90,
+                "seat_type":"PLATINUM"
                 }
           ]
       }
