@@ -14,69 +14,107 @@ Requirements for bookmyshow
 8. We can add coupon/promo code on the payment page.
 9. We can pay using various payment options.
 
-
 ## Entities
-
 ### City
-
 - id: int
 - theaters: Theater[]
-
 ### Theater
-
 - id: int
 - halls: Hall[]
-
 ### Hall
-
 - id: int
 - shows: Show[]
 - seats: Seat[]
-
 ### Seat
-
 - id: int
 - seat_type: SeatType (RECLINER, GOLD, VIP)
-
 ### Show
-
 - id: int
 - movie: Movie
 - showSeats: ShowSeat[]
-
 ### ShowSeat
-
 - id: int
 - seat: Seat
 - seatStatus: SeatStatus (AVAILABLE, LOCKED, UNAVAILABLE)
-
 ### Conceptual entities
-
 #### Payment
-
 - id: int
 - amount: double
 - payment_mode: PaymentMode
 - payment_status: PaymentStatus (PENDING, PAYED, NOT_PAYED)
 - pay_strategy: PaymentStrategy
-
 #### Ticket
-
 - id: int
 - ticket_status: TicketStatus (BOOKED, CANCELLED)
 - payment: Payment
 - show: Show
 - seats: Seat[]
 - user: User
-
 #### User
-
 - id: int
 - name: String
 - password: String
 - email: String
 
+### APIs needed
+### For admin
+- Django admin for creating cities, movies, Genres. 
+- Post /api/v1/theater - for creating a theater.
+```json
+{
+  "city_id": 1,
+  "name": "Raj Theater",
+  "halls":[{
+      "seats":{
+          "number_of_sections":3,
+          "sections":[
+              {
+                  "number_of_seats":10,
+                  "seat_type":"RECLYNER"
+              },
+              {
+                  "number_of_seats":40,
+                  "seat_type":"PLATINUM"
+              },
+              {
+                  "number_of_seats":80,
+                  "seat_type":"GOLD"
+              }
+          ]
+      }
+   },
+   {"seats":{
+          "number_of_sections":2,
+          "sections":[
+                {
+                "number_of_seats":10,
+                "seat_type":"RECLYNER"
+                },
+                {
+                "number_of_seats":90,
+                "seat_type":"PLATINUM"
+                }
+          ]
+      }
+  }]
+}
+```
 ### Few points to remember
+```python
+class MySerializer(serializers.Serializer):
+    my_field = serializers.CharField()
+
+class AnotherSerializer(serializers.Serializer):
+    my_models = MySerializer(many=True)
+{
+  "my_models": [
+    {"my_field": "value1"},
+    {"my_field": "value2"},
+    {"my_field": "value3"}
+  ]
+}
+```
+- We override 'to_representation' and 'to_internal_value' inside a serializer. Former helps us modify the json being sent in response, while latter is used to modify incoming json payload in request.
 - There is no need to specify id for models, django automatically provides 'id' column to all the models implicitly.
 - If we assign a custom primary key, default id column is removed.
 - AutoField, makes the column primary key with autoincreament.
@@ -104,3 +142,11 @@ movie.genres.add(Genres.objects.get(genre=Genre.ACTION), Genres.objects.get(genr
 >>> genre_thriller = Genres.objects.get(genre=Genre.THRILLER)
 >>> genre_action = Genres.objects.get(genre=Genre.ACTION)
 ```
+- ManyToMany do not have on_delete, it is taken care by django internally for the mapping table. If any of the entity in manyToMany field is deleted, django deletes the corresponding rows in intermidiate (mapping) table.
+- We can specify our own mapping table using "through" kwarg, when creating a manyToMany field.
+- When creating a post body, we can subclass from ModelSerializer to directly convert a model to json body. For more customization we can subclass from serializers.Serializer and specify our own custom fields.
+### Points when creating views
+- APIViews should be used when there is an specific task and gives the developer full control to customise the response, with code etc.
+- GenericAPIViews along with mixins removes the boilerplates of creating response object, explicit validation etc. It should be used when CRUD operations are related on a particular model.
+- create(self, validate_data) method can be overridden in serializer which is called when serializer.save() is called after validation (is_valid()).
+- update(self, validate_data, instance) method can be overridden in serializer which is called when serializer.save() is called after validation (is_valid()). instance is the model of the serializer.
