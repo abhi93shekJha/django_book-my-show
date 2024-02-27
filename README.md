@@ -99,6 +99,8 @@ Requirements for bookmyshow
   }]
 }
 ```
+### APIs for user
+- Show list of movies by city_id, GET /api/v1/city/{city_id}/movies
 ### Few points to remember
 ```python
 class MySerializer(serializers.Serializer):
@@ -145,8 +147,10 @@ movie.genres.add(Genres.objects.get(genre=Genre.ACTION), Genres.objects.get(genr
 - ManyToMany do not have on_delete, it is taken care by django internally for the mapping table. If any of the entity in manyToMany field is deleted, django deletes the corresponding rows in intermidiate (mapping) table.
 - We can specify our own mapping table using "through" kwarg, when creating a manyToMany field.
 - When creating a post body, we can subclass from ModelSerializer to directly convert a model to json body. For more customization we can subclass from serializers.Serializer and specify our own custom fields.
-### Points when creating views
+### Points to remember for views
 - APIViews should be used when there is an specific task and gives the developer full control to customise the response, with code etc.
 - GenericAPIViews along with mixins removes the boilerplates of creating response object, explicit validation etc. It should be used when CRUD operations are related on a particular model.
 - create(self, validate_data) method can be overridden in serializer which is called when serializer.save() is called after validation (is_valid()).
 - update(self, validate_data, instance) method can be overridden in serializer which is called when serializer.save() is called after validation (is_valid()). instance is the model of the serializer.
+- ListAPIView inherits from GenericAPIView and internally uses ListModelMixin to implement get method(internally). We simply will have to specify queryset and serializer.
+- Similarly there are other classes (CreateAPIView(post), RetrieveUpdateDestroyAPIView(get, put/patch and delete) ) subclassing GenericAPIView, for readymade usage.
