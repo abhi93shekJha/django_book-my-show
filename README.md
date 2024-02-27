@@ -100,7 +100,36 @@ Requirements for bookmyshow
 }
 ```
 ### APIs for user
-- Show list of movies by city_id, GET /api/v1/city/{city_id}/movies
+- Show list of movies by city_id, GET /api/v1/city/{city_id}/movies. (http://127.0.0.1:8000/api/v1/city/1/movies)
+- Output looks like below.
+```json
+[
+    {
+        "id": 7,
+        "created_at": "2024-02-19T17:53:19.759573Z",
+        "modified_at": "2024-02-27T14:48:48.341478Z",
+        "name": "Bhool Bhulaaiya",
+        "language": "HINDI",
+        "format": "THREE_D",
+        "genres": [
+            "HORROR",
+            "SUSPENSE"
+        ]
+    },
+    {
+        "id": 4,
+        "created_at": "2024-02-19T17:52:30.340887Z",
+        "modified_at": "2024-02-27T14:49:06.766746Z",
+        "name": "Sholey",
+        "language": "HINDI",
+        "format": "TWO_D",
+        "genres": [
+            "THRILLER",
+            "ACTION"
+        ]
+    }
+]
+```
 ### Few points to remember
 ```python
 class MySerializer(serializers.Serializer):
