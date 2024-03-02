@@ -99,6 +99,14 @@ Requirements for bookmyshow
   }]
 }
 ```
+- Admin can CRUD shows.
+- API for creating show - POST api/v1/show  (http://127.0.0.1:8000/api/v1/show)
+```json
+{
+    "hall":39,
+    "movie":4
+}
+```
 ### APIs for user
 - Show list of movies by city_id, GET /api/v1/city/{city_id}/movies. (http://127.0.0.1:8000/api/v1/city/1/movies)
 - Output looks like below.
