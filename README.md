@@ -58,8 +58,8 @@ Requirements for bookmyshow
 
 ### APIs needed
 ### For admin
-- Django admin for creating cities, movies, Genres. 
-- Post /api/v1/theater - for creating a theater.
+- Django admin for creating cities, movies, Genres.  (http://127.0.0.1:8000/admin/)
+- Post /api/v1/theater - for creating a theater.  (http://127.0.0.1:8000/api/v1/theater/)
 ```json
 {
   "city_id": 1,
@@ -99,7 +99,76 @@ Requirements for bookmyshow
   }]
 }
 ```
+- Admin can CRUD shows.
+- API for creating show - POST api/v1/show  (http://127.0.0.1:8000/api/v1/show)
+```json
+{
+    "hall":39,
+    "movie":4
+}
+```
+- API for getting shows by hall_id - GET api/v1/hall/{int:hall_id}/show (http://127.0.0.1:8000/api/v1/hall/39/show)
+```json
+[
+    {
+        "hall": 39,
+        "movie": 1,
+        "movie_name": "Mission Impossible"
+    },
+    {
+        "hall": 39,
+        "movie": 3,
+        "movie_name": "Lagaan"
+    }
+]
+```
+- API for Updating/Retreiving/Destroying show by show_id, PUT/PATCH/GET/DELETE api/v1/show/{int:show_id} (http://127.0.0.1:8000/api/v1/show/18)
+- Input for PUT.
+```json
+{
+ "hall": 41,
+ "movie": 3
+}
+```
+- Input for PATCH.
+```json
+{
+ "movie": 3
+}
+```
+### APIs for user
+- Show list of movies by city_id, GET /api/v1/city/{city_id}/movies. (http://127.0.0.1:8000/api/v1/city/1/movies)
+- Output looks like below.
+```json
+[
+    {
+        "id": 7,
+        "created_at": "2024-02-19T17:53:19.759573Z",
+        "modified_at": "2024-02-27T14:48:48.341478Z",
+        "name": "Bhool Bhulaaiya",
+        "language": "HINDI",
+        "format": "THREE_D",
+        "genres": [
+            "HORROR",
+            "SUSPENSE"
+        ]
+    },
+    {
+        "id": 4,
+        "created_at": "2024-02-19T17:52:30.340887Z",
+        "modified_at": "2024-02-27T14:49:06.766746Z",
+        "name": "Sholey",
+        "language": "HINDI",
+        "format": "TWO_D",
+        "genres": [
+            "THRILLER",
+            "ACTION"
+        ]
+    }
+]
+```
 ### Few points to remember
+- For retrieve, put, GenericAPIView will automatically take in the id from url and get or update the data. No need to add any code other than creating a simple serializer.
 ```python
 class MySerializer(serializers.Serializer):
     my_field = serializers.CharField()
@@ -145,8 +214,10 @@ movie.genres.add(Genres.objects.get(genre=Genre.ACTION), Genres.objects.get(genr
 - ManyToMany do not have on_delete, it is taken care by django internally for the mapping table. If any of the entity in manyToMany field is deleted, django deletes the corresponding rows in intermidiate (mapping) table.
 - We can specify our own mapping table using "through" kwarg, when creating a manyToMany field.
 - When creating a post body, we can subclass from ModelSerializer to directly convert a model to json body. For more customization we can subclass from serializers.Serializer and specify our own custom fields.
-### Points when creating views
+### Points to remember for views
 - APIViews should be used when there is an specific task and gives the developer full control to customise the response, with code etc.
 - GenericAPIViews along with mixins removes the boilerplates of creating response object, explicit validation etc. It should be used when CRUD operations are related on a particular model.
 - create(self, validate_data) method can be overridden in serializer which is called when serializer.save() is called after validation (is_valid()).
 - update(self, validate_data, instance) method can be overridden in serializer which is called when serializer.save() is called after validation (is_valid()). instance is the model of the serializer.
+- ListAPIView inherits from GenericAPIView and internally uses ListModelMixin to implement get method(internally). We simply will have to specify queryset and serializer.
+- Similarly there are other classes (CreateAPIView(post), RetrieveUpdateDestroyAPIView(get, put/patch and delete) ) subclassing GenericAPIView, for readymade usage.
