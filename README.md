@@ -107,7 +107,7 @@ Requirements for bookmyshow
     "movie":4
 }
 ```
-- API for getting shows by hall_id - GET api/v1/show/<int:hall_id> (http://127.0.0.1:8000/api/v1/show/39)
+- API for getting shows by hall_id - GET api/v1/hall/<int:hall_id>/show (http://127.0.0.1:8000/api/v1/hall/39/show)
 ```json
 [
     {
@@ -122,8 +122,20 @@ Requirements for bookmyshow
     }
 }
 ```
-- API for updating show by show_id, PUT api/v1/show/<int:show_id>
-- 
+- API for Updating/Retreiving/Destroying show by show_id, PUT/PATCH/GET/DELETE api/v1/show/<int:show_id> (http://127.0.0.1:8000/api/v1/show/18)
+- Input for PUT.
+```json
+{
+ "hall": 41,
+ "movie": 3
+}
+```
+- Input for PATCH.
+```json
+{
+ "movie": 3
+}
+```
 ### APIs for user
 - Show list of movies by city_id, GET /api/v1/city/{city_id}/movies. (http://127.0.0.1:8000/api/v1/city/1/movies)
 - Output looks like below.
