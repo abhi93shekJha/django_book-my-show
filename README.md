@@ -107,6 +107,23 @@ Requirements for bookmyshow
     "movie":4
 }
 ```
+- API for getting shows by hall_id - GET api/v1/show/<int:hall_id> (http://127.0.0.1:8000/api/v1/show/39)
+```json
+[
+    {
+        "hall": 39,
+        "movie": 1,
+        "movie_name": "Mission Impossible"
+    },
+    {
+        "hall": 39,
+        "movie": 3,
+        "movie_name": "Lagaan"
+    }
+}
+```
+- API for updating show by show_id, PUT api/v1/show/<int:show_id>
+- 
 ### APIs for user
 - Show list of movies by city_id, GET /api/v1/city/{city_id}/movies. (http://127.0.0.1:8000/api/v1/city/1/movies)
 - Output looks like below.
@@ -139,6 +156,7 @@ Requirements for bookmyshow
 ]
 ```
 ### Few points to remember
+- For retrieve, put, GenericAPIView will automatically take in the id from url and get or update the data. No need to add any code other than creating a simple serializer.
 ```python
 class MySerializer(serializers.Serializer):
     my_field = serializers.CharField()
