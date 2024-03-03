@@ -107,7 +107,7 @@ Requirements for bookmyshow
     "movie":4
 }
 ```
-- API for getting shows by hall_id - GET api/v1/hall/<int:hall_id>/show (http://127.0.0.1:8000/api/v1/hall/39/show)
+- API for getting shows by hall_id - GET api/v1/hall/{int:hall_id}/show (http://127.0.0.1:8000/api/v1/hall/39/show)
 ```json
 [
     {
@@ -120,9 +120,9 @@ Requirements for bookmyshow
         "movie": 3,
         "movie_name": "Lagaan"
     }
-}
+]
 ```
-- API for Updating/Retreiving/Destroying show by show_id, PUT/PATCH/GET/DELETE api/v1/show/<int:show_id> (http://127.0.0.1:8000/api/v1/show/18)
+- API for Updating/Retreiving/Destroying show by show_id, PUT/PATCH/GET/DELETE api/v1/show/{int:show_id} (http://127.0.0.1:8000/api/v1/show/18)
 - Input for PUT.
 ```json
 {
