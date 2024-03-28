@@ -3,6 +3,8 @@ from rest_framework import serializers
 from ..models.Theater import Theater
 from ..models.Hall import Hall
 from ..models.Seat import Seat
+from .ShowSerializer import UpdateRetrieveDestroyShowSerializer
+from ..models.Show import Show
 
 
 class SeatSectionSerializer(ModelSerializer):
@@ -38,7 +40,7 @@ class CreateTheaterSerializer(ModelSerializer):
         fields = ['city_id', 'name', 'halls', ]
         
     def create(self, validate_data):
-        halls_list = validate_data.pop('halls')    
+        halls_list = validate_data.pop('halls')
         
         theater_model = Theater.objects.create(**validate_data)
         
@@ -61,5 +63,57 @@ class CreateTheaterSerializer(ModelSerializer):
     def to_representation(self, instance):
         new_instance = ShowTheaterSerializer(instance=instance)
         # print(new_instance)
-        return new_instance.data            
+        return new_instance.data
+
+
+
+class UpdateRetrieveDestroyShowSerializer(serializers.ModelSerializer):
+    time = serializers.SerializerMethodField()
+    movie = serializers.SerializerMethodField()
+    class Meta:
+        model = Show
+        fields = ['hall', 'movie', 'time']
+
+    def get_movie(self, obj):
+        return obj.movie.name
+
+    def get_time(self, obj):
+        t = obj.created_at
+        print(t)
+        t_object = t.time()
+        
+        # Extract the time components
+        hour = t_object.hour
+        minute = t_object.minute
+
+        # Determine AM/PM based on the hour
+        am_pm = "AM" if hour < 12 else "PM"
+
+        # Use a formatted string literal for output
+        formatted_time = f"{hour % 12}:{minute:02d} {am_pm}"
+
+        return formatted_time
+
+
+# class ShowHallShowsSerializer(ModelSerializer):
+    
+#     shows = UpdateRetrieveDestroyShowSerializer(many=True)
+#     class Meta:
+#         model = Hall
+#         fields = ['id', 'shows', ]
+
+class ShowTheatersSerializer(ModelSerializer):
+    shows = serializers.SerializerMethodField()
+    
+    def get_shows(self, instance):
+        
+        movie_id = self.context.get('movie_id', '')
+        all_shows = Show.objects.filter(movie=movie_id, hall__theater=instance)
+        shows = UpdateRetrieveDestroyShowSerializer(all_shows, many=True)
+        return shows.data
+        
+    class Meta:
+        model = Theater
+        fields = ['id', 'name', 'shows', ]
+        
         

@@ -1,0 +1,24 @@
+# We are ignoring few files to pass to docker context.
+# Docker image uses the docker context, which is the directory it is running from.
+# All of the files are passed to docker context except for the files list in dockerignore.
+
+# Git
+# excluding git history
+.git
+.gitignore
+
+# Docker
+# some docker hidden files, we don't need to copy
+.docker
+
+# Python
+# ignoring pycache, may cause problem if copied because these pycaches created may be for our os and not for alpine os
+# dockerignore does not support ** to exclude all the subdirectories, so below format is being used.
+app/__pycache__/
+app/*/__pycache__/
+app/*/*/__pycache__/
+app/*/*/*/__pycache__/
+# below we are ignoring any of the virtual environment present locally, as we are creating it in our dockerfile
+.env/
+.venv/
+venv/

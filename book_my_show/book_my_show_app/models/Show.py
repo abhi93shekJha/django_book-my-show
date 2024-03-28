@@ -12,3 +12,7 @@ class Show(BaseModel):
     class Meta:
         unique_together = ['hall', 'movie',]
     
+    # We are adding a feature here that, same hall can show movie on a different time
+    # We will have to take in start time in that case, and add the unique contraint on start_time
+    # start_time = models.CharField(unique=True)
+    

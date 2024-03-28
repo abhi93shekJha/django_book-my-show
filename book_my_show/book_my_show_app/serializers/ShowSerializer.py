@@ -37,9 +37,25 @@ class ShowListByHallSerializer(serializers.ModelSerializer):
         return obj.movie.name
     
 class UpdateRetrieveDestroyShowSerializer(serializers.ModelSerializer):
-    
+    time = serializers.SerializerMethodField()
     class Meta:
         model = Show
-        fields = ['hall', 'movie', ]
+        fields = ['hall', 'movie', 'time']
      
+    def get_time(self, obj):
+        t = obj.created_at
+        print(t)
+        t_object = t.time()
+        
+        # Extract the time components
+        hour = t_object.hour
+        minute = t_object.minute
+
+        # Determine AM/PM based on the hour
+        am_pm = "AM" if hour < 12 else "PM"
+
+        # Use a formatted string literal for output
+        formatted_time = f"{hour % 12}:{minute:02d} {am_pm}"
+
+        return formatted_time
         
