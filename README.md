@@ -221,3 +221,32 @@ movie.genres.add(Genres.objects.get(genre=Genre.ACTION), Genres.objects.get(genr
 - update(self, validate_data, instance) method can be overridden in serializer which is called when serializer.save() is called after validation (is_valid()). instance is the model of the serializer.
 - ListAPIView inherits from GenericAPIView and internally uses ListModelMixin to implement get method(internally). We simply will have to specify queryset and serializer.
 - Similarly there are other classes (CreateAPIView(post), RetrieveUpdateDestroyAPIView(get, put/patch and delete) ) subclassing GenericAPIView, for readymade usage.
+### Concepts to remember
+- Related Manager is an object to access related object (Many fields generally in ManyToOne relation). We specify the object name by either using related_name or django creates it with foreignkey_set (it adds _set in the name of foreign key variable). We can perform CRUD on related object model, example below,
+```python
+# model
+from django.db import models
+class Author(models.Model):
+  name = models.CharField(max_length=200)
+
+class Book(models.Model):
+  name = models.CharField(max_length=200)
+  author = models.ForeignKey(Author, on_delete=models.CASCADE, related_name='books')
+
+## in shell
+author = Author.create(name='J.K. Rowlling')
+# accessing related manager object
+author.books.all()
+book1 = author.books.create(name="Harry Potter 1")
+book2 = author.books.create(name="Harry Potter 2")
+# it would have been author.book_set by default.
+# Similarly, we can add filter, get etc on these related object
+```
+- I have Show model with hall as foreign key, Hall model with theater as foreign key. I can access all the shows with theater using Show.objects.filter(hall__theater=theater_id), very useful.
+- We have '__in' and '__range', example below,
+```python
+id_list = [1, 3, 4, 13, 15, 18]
+Books.objects.filter(id__in=id_list)
+Books.objects.filter(print__range=(100, 500))
+```
+### TODO Pagination
