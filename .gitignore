@@ -1,0 +1,5 @@
+*.pyc
+temp/*
+logs/
+*.log
+**/migrations/
