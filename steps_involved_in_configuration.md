@@ -16,11 +16,12 @@
    We will create config file at .github/workflows/checks.yml (this yml file can be named anything other than checks).
    We can also create other config files, ex. deployement.yml, let's say we want to deploy our project automatically with github action.
    Then we will set trigger in config file, and add steps for running testing and linting.
-   We will then setup docker hub authentication.
-7. Docker hub is where we pull base images from (by default).
+7. For this we will then take Action tokens from docker hub account and save them to github/settings/secrets and variables/Actions tab.
+8. Docker hub is where we pull base images from (by default).
    From an IP, docker hub allows to pull 100 images/6 hours. If logged in (authenticated user), 200 images/6 hours.
    Github Action uses shared IP address, so many users (1000s) have same IP, hence limit will be reached immediately.
    So, we authenticate ourselves from our github account to get a limit of 200 pulls/6 hours which is more than enough for most projects.
-8. Register to docker hub. Then we will add secrets to our GitHub project.
+9. Register to docker hub. Then we will add secrets to our GitHub project.
    Secrets are nothing but encrypted authentication credentials to access docker hub.
    Not visible to the user, but gets decrypted automatically when we do some job (interating with docker hub).
+10. Now pushing to git performs linting and unit testing of code visible on Actions tab on github.
