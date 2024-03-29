@@ -17,12 +17,12 @@ jobs:
         with:   # credentials to login to docker
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-    - name: Checkout
-      # action provided by github for free (premade), for code checkout in GAs job. (By default, code is not checked out in the job).
-      uses: actions/checkout@v2   # There may be some jobs that don't need code, but this one does as it will perform test and code linting.
-    - name: Test
-      run: docker-compose run --rm app sh -c "python manage.py test"    # command to perform unit test
-    - name: Lint
-      run: docker-compose run --rm app sh -c "flake8"
+      - name: Checkout
+        # action provided by github for free (premade), for code checkout in GAs job. (By default, code is not checked out in the job).
+        uses: actions/checkout@v2   # There may be some jobs that don't need code, but this one does as it will perform test and code linting.
+      - name: Test
+        run: docker-compose run --rm app sh -c "python manage.py test"    # command to perform unit test
+      - name: Lint
+        run: docker-compose run --rm app sh -c "flake8"
 
-    # docker-compose and docker are already available on this runner (ubuntu-20.04) we are using. So no need to install
+      # docker-compose and docker are already available on this runner (ubuntu-20.04) we are using. So no need to install
