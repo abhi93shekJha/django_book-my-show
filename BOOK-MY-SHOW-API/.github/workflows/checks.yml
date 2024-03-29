@@ -1,0 +1,28 @@
+# (Using word GAs for Github Actons)
+
+---   # to specify its a yml file
+name: Checks   # this name will appear in github actions
+
+on: [push]     # trigger, run the jobs specified here on git push
+
+
+jobs:
+  test-lint:   # new job, test-lint is the id of the job. Can be used to reference in GAs,(we may want to change job order, interact with jobs basically)
+    name: Test and Lint    # human friendly name to be seen on GAs
+    runs-on: ubuntu-20.04   # the runner(os) which will be used to run our job. We may use different runners, windows etc. (see the documentation)
+    steps:
+      - name: Login to Docker Hub    # to be seen in GAs interface
+        # premade action provided in GAs repository, 'action' is actually docker container with docker configuration to perform some task
+        uses: docker/login-action@v1    # this one will be used to perform login to docker
+        with:   # credentials to login to docker
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Checkout
+      # action provided by github for free (premade), for code checkout in GAs job. (By default, code is not checked out in the job).
+      uses: actions/checkout@v2   # There may be some jobs that don't need code, but this one does as it will perform test and code linting.
+    - name: Test
+      run: docker-compose run --rm app sh -c "python manage.py test"    # command to perform unit test
+    - name: Lint
+      run: docker-compose run --rm app sh -c "flake8"
+
+    # docker-compose and docker are already available on this runner (ubuntu-20.04) we are using. So no need to install

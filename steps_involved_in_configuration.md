@@ -14,6 +14,7 @@
 6. Configuring Github actions. Similar to Travis-CI, GitLab CI/CD, Jenkins. When code changes, we run tasks.
    Useful for automating certain tasks. Common uses, to run Deployment, Code Linting, Unit tests. All automatically.
    We will create config file at .github/workflows/checks.yml (this yml file can be named anything other than checks).
+   We can also create other config files, ex. deployement.yml, let's say we want to deploy our project automatically with github action.
    Then we will set trigger in config file, and add steps for running testing and linting.
    We will then setup docker hub authentication.
 7. Docker hub is where we pull base images from (by default).
