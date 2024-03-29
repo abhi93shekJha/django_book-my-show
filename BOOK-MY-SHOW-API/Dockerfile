@@ -1,4 +1,5 @@
 # base image for python and alpine is a lightweight version for linux, ideal for running docker containers. (alpine is bare minimum, not having any unnecessary dependencies)
+# replacing alpine with slim-buster
 FROM python:3.8.10-slim-buster
 # define maintainers
 LABEL maintainers="Abhishek Jha"
@@ -9,7 +10,7 @@ ENV PYTHONUNBUFFERED 1
 
 COPY ./requirements.txt /tmp/requirements.txt
 COPY ./requirements.dev.txt /tmp/requirements.dev.txt
-COPY . /app
+COPY ./book_my_show /app
 WORKDIR /app
 
 # exposing this port to access django dev server. This port will be exposed when our image will start our container.
@@ -52,5 +53,5 @@ django-user
 ENV PATH="/py/bin:$PATH"
 
 # Container created using this image will run using the last user the image switch to
-# Using the below line we switch to django-user, default is the root user, and we don't want that. It won't have the root priviledge now. Yay
+# Using the below line we switch to django-user, default is the root user, and we don't want that. It won't have the root priviledges now. Yay
 USER django-user

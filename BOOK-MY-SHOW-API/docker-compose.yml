@@ -3,14 +3,14 @@ version: "3.9"   # version of docker compose syntax, if they release a new versi
 services:
   app:   # this is the name of our service that will build docker file
     build:
-      context: .   # when building using the root directory
+      context: .   # when building using the root directory (where dockerfile is present which we are building)
       args:
         - DEV=true   # DEV variable will be used inside dockerfile, before building we are setting it to true
     ports:
-      - "8000:8000"    # maps port 8000 on our local machine to port 8000 in docker container, will be used to access network to connect to our server
+      - "8000:8000"    # maps port 8000 on our local machine to port 8000 in docker container. Now we can make API calls from host machine, since 8000 on localhost is active.
     volumes:
-      - .:/app   # used of mapping directories from our system to docker container, /app here is inside of docker container
+      - ./book_my_show:/app   # used for mapping directories from our system to docker container, /app here is inside of docker container
                 # any code changes to local, will reflect in /app inside docker in real time, no need to rebuild everytime
-                # also any data created inside /app inside container will persist in local at '.'
+                # also any data created inside /app inside container will persist in local inside './book_my_show'
     command: >   # we can specify the command that will be used when we run docker compose by docker-compose run, this can be overridden by sepecifying the command with docker-compose run
       sh -c "python manage.py runserver 0.0.0.0:8000"
