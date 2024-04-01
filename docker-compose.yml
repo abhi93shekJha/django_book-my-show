@@ -14,3 +14,23 @@ services:
                 # also any data created inside /app inside container will persist in local inside './book_my_show'
     command: >   # we can specify the command that will be used when we run docker compose by docker-compose run, this can be overridden by sepecifying the command with docker-compose run
       sh -c "python manage.py runserver 0.0.0.0:8000"
+    environment:    # Values helpful to connect to db server, we will tell django how to use these value to connect to db
+      - DB_HOST=db   # all the services in docker-container can interact will each other using host name (db here)
+      - DB_NAME=devdb   # all the values are matching the values provided in db service
+      - DB_USER=devuser
+      - DB_PASS=changeme
+    depend_on:  # this configuration will make db service start first before starting the app service.
+      - db
+
+  db:
+    image: postgres:13-alpine
+    volumes: # this will persist the data in our local, which this service will start using as soon as it starts again
+      - dev-db-data:/var/lib/postgresql/data       # later is the data location inside postgresql inside container
+    environment:  # setting initial database configuration for new db service
+                  # so when database first starts, it will create a new database devdb, user to be devuser, with password changeme. All for local dev server
+      - POSTGRES_DB=devdb
+      - POSTGRES_USER=devuser
+      - POSTGRES_PASSWORD=changeme
+
+volumes:
+  dev-db-data:
