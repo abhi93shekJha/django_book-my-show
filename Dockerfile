@@ -1,6 +1,6 @@
 # base image for python and alpine is a lightweight version for linux, ideal for running docker containers. (alpine is bare minimum, not having any unnecessary dependencies)
 # replacing alpine with slim-buster
-FROM python:3.8.10-slim-buster
+FROM python:3.9-alpine
 # define maintainers
 LABEL maintainers="Abhishek Jha"
 
@@ -25,6 +25,8 @@ EXPOSE 8000
 # this single run command will keep our image lightweight, making the building of image efficient.
 # 1. We are creating python venv first, this will avoid any conflict in dependencies present in our project and in our base image at the same time.
 # 2. Upgrades pip (python package manager) inside our virtual environment.
+# Added later for installing dependencies for finally installing psycopg2(from requirements.txt): We are first installing postgresql-client, then in next
+# line installing build-base, postgresql-dev and musl-dev and packeging these inside .tmp-build-deps to delete it later on below.
 # 3. It will install all the requirements inside our virtual environment.
 # Added extra: if DEV is set as true from docker-compose, it will install the requirements.dev.txt also, (fi used is actually closing if)
 # 4. Remove the tmp directory. Makes sure docker image is as lightweight as possible.
@@ -35,16 +37,20 @@ EXPOSE 8000
 # it will keep the DEV var to be false by default. We are overriding this in docker-copose file to true
 ARG DEV=false
 RUN python -m venv /py && \
-/py/bin/pip install --upgrade pip && \
-/py/bin/pip install -r /tmp/requirements.txt && \
-if [ ${DEV}="true" ]; \
-    then /py/bin/pip install -r /tmp/requirements.dev.txt ; \
-fi && \
-rm -rf /tmp && \
-adduser \
---disabled-password \
---no-create-home \
-django-user
+    /py/bin/pip install --upgrade pip && \
+    apk add --update --no-cache postgresql-client && \
+    apk add --update --no-cache --virtual .tmp-build-deps \
+        build-base postgresql-dev musl-dev && \
+    /py/bin/pip install -r /tmp/requirements.txt && \
+    if [ ${DEV} = "true" ]; \
+        then /py/bin/pip install -r /tmp/requirements.dev.txt ; \
+    fi && \
+    rm -rf /tmp && \
+    apk del .tmp-build-deps && \
+    adduser \
+        --disabled-password \
+        --no-create-home \
+        django-user
 
 # PATH is automatically created inside linux, that defines all of the directories where executables are present.
 # We are specifying below the path to bin of our virtual env, which is where os will search for any executable files (any_script.py).

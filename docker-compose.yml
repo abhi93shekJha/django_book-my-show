@@ -19,7 +19,7 @@ services:
       - DB_NAME=devdb   # all the values are matching the values provided in db service
       - DB_USER=devuser
       - DB_PASS=changeme
-    depend_on:  # this configuration will make db service start first before starting the app service.
+    depends_on:  # this configuration will make db service start first before starting the app service.
       - db
 
   db:
