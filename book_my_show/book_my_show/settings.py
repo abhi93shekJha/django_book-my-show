@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_extensions',
     'book_my_show_app',
+    'core',
 ]
 
 MIDDLEWARE = [
@@ -77,8 +78,11 @@ WSGI_APPLICATION = 'book_my_show.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'HOST': os.environ.get("DB_HOST"), 
+        'NAME': os.environ.get("DB_NAME"),
+        "USER": os.environ.get("DB_USER"),
+        'PASSWORD': os.environ.get('DB_PASS'),
     }
 }
 

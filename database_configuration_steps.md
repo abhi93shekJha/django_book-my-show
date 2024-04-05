@@ -1,4 +1,3 @@
-
 ##### Using Postgres with Docker compose
 
 - Using docker compose for postgres will allow us to define db configurations which can be reused by other developers and also be reusable for deployement environment.
@@ -32,3 +31,13 @@
 - List of packages needed to install psycopg2 are C compile, python3-dev and libpq-dev. Unfortunately they come with different names for our slim-buster package manager.
 - We will first get these 3 mentioned packages, which are only useful for installing psycopg2 and then delete these for keeping container lightweight. Read in dockerfile.
 - Finally we will add psycopg2 in requirements.txt.
+
+#### Database Race condition when using docker-compose
+
+- We get an issue called race condition for database when using database service using docker-compose.
+- It can happen locally or in production environment.
+- What happens is, we are using depends_on command inside our docker-compose file, for making app service start only after db service is started.
+- But what happens is the db service will be considered started even before finishing starting postgresql database (since it takes time to setup postgres in order to accept connections).
+- Hence just after db service started, django app service will be started and may try to interact with database which is still not started and will throw error.
+- For fixing this we will write a custom command names as "wait for db", which will make app service to start only after postgres becomes available as well. It will keep on checking for database untill it becomes ready meanwhile pausing app service from starting.
+- For creating custom command 'wait_for_db', we have created a new app, core, removed urls.py, views.py, added management/commands/wait_for_db.py. Code description present in the module.

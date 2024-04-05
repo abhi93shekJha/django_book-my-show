@@ -21,7 +21,7 @@ jobs:
         # action provided by github for free (premade), for code checkout in GAs job. (By default, code is not checked out in the job).
         uses: actions/checkout@v2   # There may be some jobs that don't need code, but this one does as it will perform test and code linting.
       - name: Test
-        run: docker-compose run --rm app sh -c "python manage.py test"    # command to perform unit test
+        run: docker-compose run --rm app sh -c "python manage.py wait_for_db && python manage.py test"    # command to perform unit test
       - name: Lint
         run: docker-compose run --rm app sh -c "flake8"
 

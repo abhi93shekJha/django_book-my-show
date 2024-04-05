@@ -25,3 +25,11 @@
    Secrets are nothing but encrypted authentication credentials to access docker hub.
    Not visible to the user, but gets decrypted automatically when we do some job (interating with docker hub).
 10. Now pushing to git performs linting and unit testing of code visible on Actions tab on github.
+
+### Database configuration
+
+- We will configure database as discussed in database_configuration_steps.md file.
+- Since we have created a custom command called 'wait_for_db', we will add this before running test or before doing migration.
+- So we will first configure it inside docker-compose in our app service, before making the server available.
+- We will first add python manage.py wait_for_db, then python manage.py migrate, python manage.py runserver. So this will automatically wait for db to be ready, do database migrations, and then start the server.
+- Other than this we will add python manage.py wait_for_db, then python manage.py test in checks.yml for configuring github Actions.
