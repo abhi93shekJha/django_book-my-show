@@ -14,7 +14,7 @@ services:
                 # also any data created inside /app inside container will persist in local inside './book_my_show'
     command: >   # we can specify the command that will be used when we run docker compose by docker-compose run, this can be overridden by sepecifying the command with docker-compose run
       sh -c "python manage.py wait_for_db &&
-             python manage.py migrate && 
+             python manage.py migrate &&
              python manage.py runserver 0.0.0.0:8000"
     environment:    # Values helpful to connect to db server, we will tell django how to use these value to connect to db
       - DB_HOST=db   # all the services in docker-container can interact will each other using host name (db here)

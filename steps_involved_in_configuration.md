@@ -33,3 +33,28 @@
 - So we will first configure it inside docker-compose in our app service, before making the server available.
 - We will first add python manage.py wait_for_db, then python manage.py migrate, python manage.py runserver. So this will automatically wait for db to be ready, do database migrations, and then start the server.
 - Other than this we will add python manage.py wait_for_db, then python manage.py test in checks.yml for configuring github Actions.
+
+### Custom User
+
+- Implemented inside models.py inside core app. Implemented using Test Driven Development (TDD), tests can be found in core/tests/test_model.py.
+- We are adding configuration in settings.py to use custorm user as default system user. After this django will start using our custom user for Authorization and Authentication purposes.
+- "docker volume ls", this will list all the volumes available. We can delete the volume if needed. These are existing data either on local or on remote.
+- 'docker-compose run --rm app sh -c "python manage.py createsuperuser"', for creating a superuser.
+
+### Admin customization
+
+- SuperUser - email - admin@test.com, password - admin
+- Django allows its superuser to access admin page. So a user having is_staff and is_superuser flages set to true can added admin page.
+- We can customize Admin page in admin.py. Via Admin interface, we can perform crud on all the available models.
+
+### Documentation
+
+- Using drf-spectacular (third party library) for automatic documentation generation. This will use docstring from modules.
+- This will generate a schema (yml file), following openapi schema standard. This can be then fed to any of the documentation tools.
+- We are using Swagger documentation tool for our project. However any other tool can be used.
+- Added drf-spectacular in requirements.txt. then run 'docker-compose build'.
+- In settings.py, in installed_app, add 'rest_framework' (we had not added it before, we are adding it since other apps may have dependency on it) and add 'drf_spectacular'.
+- We are going to generate schema using drf spectacular, which we will feed to swagger tool to get a nice looking UI of APIs.
+- Now we add REST_FRAMEWORK configuration in settings.py to a dictionary having few configurations.
+- Now we add urls inside project's url.py for schema generation and using swagger.
+- We can also use public swagger instance available on the internet and feed it our schema generated using drf-spectacular.

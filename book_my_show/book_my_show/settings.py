@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django_extensions',
     'book_my_show_app',
     'core',
+    'rest_framework',
+    'drf_spectacular',
 ]
 
 MIDDLEWARE = [
@@ -124,3 +126,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+AUTH_USER_MODEL = 'core.User'
+
+# we can use schema specification from a various different schema specification but we are
+# using openapi here. And confugiring rest framework to use AutoSchema class from drf_spectacular package installed in our project.
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
