@@ -27,8 +27,8 @@
 - But this is not good for production as it is not optimized for the os it is running on (so slow performance).
 - Other is psycopg2, which has good performace as it is compiled from source code when installed and it is compiled for specific os where it is running.
 - But for installing this we will need few dependencies that it uses for its installation. We have configured this in our docker file.
-- Once these instructions are mentioned in docker file, we won't have to change it for other machines, as docker uses its own base os, slim-buster for our project.
-- List of packages needed to install psycopg2 are C compile, python3-dev and libpq-dev. Unfortunately they come with different names for our slim-buster package manager.
+- Once these instructions are mentioned in docker file, we won't have to change it for other machines, as docker uses its own base os, alpine for our project.
+- List of packages needed to install psycopg2 are C compile, python3-dev and libpq-dev. Unfortunately they come with different names for our alpine package manager.
 - We will first get these 3 mentioned packages, which are only useful for installing psycopg2 and then delete these for keeping container lightweight. Read in dockerfile.
 - Finally we will add psycopg2 in requirements.txt.
 

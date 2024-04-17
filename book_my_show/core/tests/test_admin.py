@@ -46,7 +46,7 @@ class TestAdminSite(TestCase):
         """Test if edit user admin page works."""
         
         # this generates a url admin/core/user/{id}/change, this url will take to the page where we can edit and update this particular user fields.
-        url = reverse('admin:core_user_change', args=[self.user.id])    
+        url = reverse('admin:core_user_change', args=[self.user.id])
         res = self.client.get(url)
         
         # Ensuring the page loads

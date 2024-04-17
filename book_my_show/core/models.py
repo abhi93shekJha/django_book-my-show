@@ -19,7 +19,7 @@ class UserManager(BaseUserManager):
             raise ValueError("User must have a valid email address.")
         user = self.model(email=self.normalize_email(email), **extra_fields)   # model method will create the user for us
         user.set_password(password)
-        user.save(using=self._db)   # we can specify different databases here, self._db takes the db associated with current model(User here). We can set different dbs to different models.
+        user.save(using=self._db)   # we can specify different databases here, self._db takes the db associated with current model(User here). We can also set different dbs to different models.
         
         return user
     

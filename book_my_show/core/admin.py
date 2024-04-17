@@ -5,7 +5,7 @@ Admin customisation.
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from core import models
-from django.utils.translation import gettext_lazy as translate   # useful when we want to change language of the text in future.
+from django.utils.translation import gettext_lazy as translate   # useful when we want to change language of the text in future. (using some configurations)
 
 # Register your models here.
 

@@ -11,21 +11,33 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+from pathlib import Path
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '6!f7=eyui=0((tl$42p%8kiv2d@61+f+yq((e!eun)%8ixj^9p'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'changeme') # keeping default value as 'changeme' for local development
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# Making DEBUG FALSE, will not show too many information of failure to the user, when the app crashes. Detailed error is not shown to the user (if not set False, it may leak some sensitive data to the user).
+# Also making it false improves performance, since certain debugging features are disabled.
+DEBUG = bool(int(os.environ.get('DEBUG', 0)))   # Default is false, Making it true from docker-compose
 
+
+# only allowed hosts will be able to access this app
 ALLOWED_HOSTS = []
+# If ALLOWED_HOSTS not set, it will have an empty list.
+ALLOWED_HOSTS.extend(
+    filter(
+        None,
+        os.environ.get('ALLOWED_HOSTS', '').split(','),
+    )
+)
 
 
 # Application definition
@@ -42,6 +54,7 @@ INSTALLED_APPS = [
     'core',
     'rest_framework',
     'drf_spectacular',
+    'user',
 ]
 
 MIDDLEWARE = [
@@ -125,7 +138,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = '/static/static/'
+MEDIA_URL = '/static/media/'
+
+MEDIA_ROOT = '/vol/web/media'
+STATIC_ROOT = '/vol/web/static'
+
+# Default primary key field type
+# https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'core.User'
 
@@ -133,4 +154,8 @@ AUTH_USER_MODEL = 'core.User'
 # using openapi here. And confugiring rest framework to use AutoSchema class from drf_spectacular package installed in our project.
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+SPECTACULAR_SETTINGS = {
+    'COMPONENT_SPLIT_REQUEST': True,
 }

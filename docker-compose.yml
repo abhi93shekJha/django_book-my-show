@@ -12,6 +12,7 @@ services:
       - ./book_my_show:/app   # used for mapping directories from our system to docker container, /app here is inside of docker container
                 # any code changes to local, will reflect in /app inside docker in real time, no need to rebuild everytime
                 # also any data created inside /app inside container will persist in local inside './book_my_show'
+      - dev-static-data:/vol/web
     command: >   # we can specify the command that will be used when we run docker compose by docker-compose run, this can be overridden by sepecifying the command with docker-compose run
       sh -c "python manage.py wait_for_db &&
              python manage.py migrate &&
@@ -21,6 +22,7 @@ services:
       - DB_NAME=devdb   # all the values are matching the values provided in db service, for this service to connect to db service
       - DB_USER=devuser
       - DB_PASS=changeme
+      - DEBUG=1   # this variable is being used in setting.py
     depends_on:  # this configuration will make db service start first before starting the app service.
       - db
 
@@ -36,3 +38,4 @@ services:
 
 volumes:
   dev-db-data:
+  dev-static-data:

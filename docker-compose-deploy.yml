@@ -1,0 +1,45 @@
+version: "3.9"
+
+services:
+  app:
+    build:
+      context: .   # use dockerfile from root of project
+    restart: always  # if app crashes due to an error, restart it automatically
+    volumes:    # mapping static-data to /vol/web to serve the static data by nginx proxy
+      - static-data:/vol/web
+    command: >
+      sh -c "run.sh"
+    environment:     # these env. variables will be set from .env file (to be created on deployement server).
+      - DB_HOST=db
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+      - SECRET_KEY=${DJANGO_SECRET_KEY}
+      - ALLOWED_HOSTS=${DJANGO_ALLOWED_HOSTS}
+    depends_on:  # it will first wait for db service to start before starting.
+      - db
+
+  db:
+    image: postgres:13-alpine
+    restart: always
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    environment:  # setting the values for db configuration(pulling form .env file) and then using it in app service mentioned above
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASS}
+
+  proxy:
+    build:
+      context: ./proxy
+    restart: always
+    depends_on: # should start after app service is started. Since the request from proxy will be directed to app service.
+      - app
+    ports:  # port 80 in server will be mapped to port 8000 inside container
+      - 80:8000
+    volumes:
+      - static-data:/vol/static
+
+volumes:  # static-data is a shared valume among proxy and app services. Since proxy will directly serve the static data to clients (when receive request url ending with /static)
+  postgres-data:
+  static-data:

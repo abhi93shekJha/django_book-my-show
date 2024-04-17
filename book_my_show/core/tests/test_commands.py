@@ -12,9 +12,9 @@ from django.core.management import call_command
 from django.db.utils import OperationalError   # thrown by database
 from django.test import SimpleTestCase  # base test class for testing whithout using database
 
-# when we run command using "python manage.py mycommand", first check method runs (where we check prerequisite, system check etc.) and then 
-# handle method is run. We override handle and write our logic for creating custom commands
-@patch('core.management.commands.wait_for_db.Command.check') # mocking check method inside our Command class (taking from BaseCommand) inside wait_for_db module
+# when we run command using "python manage.py mycommand", first 'check' method runs (where we check prerequisite, system check etc.) and then
+# 'handle' method is run. We override handle and write our logic for creating custom commands
+@patch('core.management.commands.wait_for_db.Command.check') # mocking check method inside our Command class (taken from BaseCommand) inside wait_for_db module
 class CommandTests(SimpleTestCase):
     """Test commands."""
     
