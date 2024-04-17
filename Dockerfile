@@ -11,15 +11,15 @@ ENV PYTHONUNBUFFERED 1
 COPY ./requirements.txt /tmp/requirements.txt
 COPY ./requirements.dev.txt /tmp/requirements.dev.txt
 COPY ./scripts /scripts
-COPY ./book_my_show /app
-WORKDIR /app
+COPY ./book_my_show /book_my_show
+WORKDIR /book_my_show
 
 # exposing this port to access django dev server. This port will be exposed when our image will start our container.
 EXPOSE 8000
 
 # When we build this file, all the commands create an image layer stacked one over another.
 # Ex. in here, all the below commands will be stacked over base image mentioned at the top.
-# ex. Copy . /app image will be stacked over FROM python:3.9-alpine3.13, etc.
+# ex. Copy . /book_my_show image will be stacked over FROM python:3.9-alpine3.13, etc.
 # This is done internally to cache images to build faster and various other reasons.
 
 # Below we are running all the commands at once, if we run them one by one it will create new image layer for every command
@@ -62,7 +62,7 @@ RUN python -m venv /py && \
 
 # PATH is automatically created inside linux, that defines all of the directories where executables are present.
 # We are specifying below the path to bin of our virtual env, which is where os will search for any executable files (any_script.py).
-# If not done, I will have to specify the full path, ex. python /app/run.py
+# If not done, I will have to specify the full path, ex. python /book_my_show/run.py
 # BTW this change of PATH will reflect in all of the below stacked image layers, including base image.
 ENV PATH="/scripts:/py/bin:$PATH"
 
