@@ -52,9 +52,9 @@ INSTALLED_APPS = [
     'django_extensions',
     'book_my_show_app',
     'core',
+    'user',
     'rest_framework',
     'drf_spectacular',
-    'user',
 ]
 
 MIDDLEWARE = [
