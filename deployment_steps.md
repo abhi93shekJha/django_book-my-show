@@ -126,5 +126,22 @@ uwsgi_params are needed by NGINX for communicating HTTP request to uWSGI server.
 - (list docker images) docker images
 - (For running any django command) docker-compose run --rm app sh -c "python manage. my_command"
 - (For building services) docker-compose build
+- (run using docker-compose) docker-compose -f docker-compose-deploy.yml run --rm app sh -c "python manage.py collectstatic --noinput"
+- (removes the volumes) docker compose -f docker-compose-deploy.yml down --volumes
 
-### Deploy App
+### AWS Setup:
+
+- Register to AWS and create an IM user for logging in as an administrative user (having less previledges).
+- Keep your root user credentials somewhere safe for security.
+- Login as IAM user. I am using Multi Factor Authentication to log in.
+- Creating ssh key in our machine and saving it on AWS account to be able to connect with the aws server.
+- ssh-keygen -t rsa -b 4096 (for creating a new key). Enter the path name with key name to save the key at.
+- copy the content of .pub (aws_id_rsa.pub in our case). Use cat aws_id_rsa.pub and copy.
+- Go to EC2 service. Go to Key-Pairs under Network and security. Add the key.
+- Create an EC2 instance now, follow the steps from somewhere.
+- Copy the public IP address from AWS console. (3.142.232.146)
+- On our local terminal run 'ssh-add aws_id_rsa' (needed to connect to created EC2 instance).
+- Connect to the server using ssh ec2-user@3.142.232.146.
+- Now creating ssh key on EC2 to save to github in order to clone the repo from github (ssh-keygen -t ed25519 -b 4096).
+- cat ~/.ssh/id_ed25519.pub (copying the content of generated public key).
+- Adding this ssh-key to github, go to settings of my repo (where I am pushing the code). Go to security-Deployed Keys, and then add the key.
