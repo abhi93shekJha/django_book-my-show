@@ -58,7 +58,7 @@ RUN python -m venv /py && \
     mkdir -p /vol/web/static && \
     chown -R django-user:django-user /vol && \
     chmod -R 755 /vol && \
-    chmod -R 755 /book_my_show && \
+    chmod -R 777 /book_my_show && \
     chmod -R +x /scripts
     
 
