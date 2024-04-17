@@ -58,7 +58,9 @@ RUN python -m venv /py && \
     mkdir -p /vol/web/static && \
     chown -R django-user:django-user /vol && \
     chmod -R 755 /vol && \
+    chmod -R 755 /book_my_show && \
     chmod -R +x /scripts
+    
 
 # PATH is automatically created inside linux, that defines all of the directories where executables are present.
 # We are specifying below the path to bin of our virtual env, which is where os will search for any executable files (any_script.py).
