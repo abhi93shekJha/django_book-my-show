@@ -15,7 +15,7 @@
 - This behaviour can be overridden to have a consistent database for all our testcases. (Not needed often)
 - Test classes provided by django are: SimpleTestCase (No database integration), TestCase (Uses Database)
 
-```
+```python
 
 """
 Unit tests for views.
@@ -34,7 +34,7 @@ class ViewsTests(SimpleTestCase):
 		res = views.remove_duplicates(sample_items)
 
 		self.assertEqual(res, [1, 2, 3, 4, 5])
-```
+```		
 
 - We run the test using command "python manage.py test"
 

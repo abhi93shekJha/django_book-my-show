@@ -23,7 +23,7 @@ class ModelTests(TestCase):
         self.assertEqual(user.email, email)
         self.assertTrue(user.check_password(password))
         
-    # normalization means we will lower the case for email string after @. There is an inbuilt method for this, implemented in User model    
+    # normalization means we will lower the case for email string after @. There is an inbuilt method for this, implemented in User model
     def test_email_is_normalized_successful(self):
         """Test for email normalization"""
         emails = [
