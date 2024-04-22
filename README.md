@@ -1,4 +1,5 @@
 # django_book-my-show
+http://ec2-3-142-232-146.us-east-2.compute.amazonaws.com/api/docs/
 
 Requirements for bookmyshow
 
