@@ -268,11 +268,11 @@ movie.genres.add(Genres.objects.get(genre=Genre.ACTION), Genres.objects.get(genr
 
 ### Concepts to remember
 
-- __Important__: By deault all the models get a Manager object, when using .objects on model object. This returns an object of Manager class, this class has methods like all(), filter(), get() etc. We can create our own custom managers and adding objects = MyCustomManager() in our model class.
-- Methods provided by default manager (all(), filter(), get() etc.) returns a QuerySet. This is an object provided by django which does not execute at once when it is returned. You can think of it a complex query, created by using methods of default manager which has not yet hit the database.
+- __Important__: By deault all the models get a Manager object, when using .objects on model object. This returns an object of Manager class, this class has methods like all(), filter(), get() etc. We can create our own custom managers and will have to add objects = MyCustomManager() in our model class.
+- Methods provided by default manager (all(), filter(), get() etc.) returns a QuerySet. This is an object provided by django which does not execute at once when it is returned. You can think of it as a complex query, created by using methods of default manager which has not yet hit the database.
 - This is called lazy evaluation (used for optimisation). It hits the database when we actually try getting the value, ex. iterating over queryset, count(), exits() etc.
 - Also for further optimisation, django caches the value returned from queryset, and does not hit db everytime we want to read the data. So, in first run of the queryset (when we try to read the data using iterate, list(), count(), exists() etc.), it will fetch all the data using the queryset and cache the data, and in next attempt to read these data, it will use the cached data.
-- To get new data, we will have to again create a new queryset using objects, and filter(), get() etc.
+- To get new data, we will have to again create a new queryset using objects, and then run filter(), get() etc.
 - Related Manager is an object to access related object (Many fields generally in ManyToOne relation). We specify the object name by either using related_name or django creates it with foreignkey_set (it adds _set in the name of foreign key variable). We can perform CRUD on related object model, example below,
 
 ```python
