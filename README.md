@@ -273,7 +273,7 @@ movie.genres.add(Genres.objects.get(genre=Genre.ACTION), Genres.objects.get(genr
 - This is called lazy evaluation (used for optimisation). It hits the database when we actually try getting the value, ex. iterating over queryset, count(), exits() etc.
 - Also for further optimisation, django caches the value returned from queryset, and does not hit db everytime we want to read the data. So, in first run of the queryset (when we try to read the data using iterate, list(), count(), exists() etc.), it will fetch all the data using the queryset and cache the data, and in next attempt to read these data, it will use the cached data.
 - To get new data, we will have to again create a new queryset using objects, and then run filter(), get() etc.
-- Related Manager is an object to access related object (Many fields generally in ManyToOne relation). We specify the object name by either using related_name or django creates it with foreignkey_set (it adds _set in the name of foreign key variable). We can perform CRUD on related object model, example below,
+- Related Manager is an object to access related object (Many fields generally in ManyToOne relation). We specify the object name by either using related_name or django creates it with foreignKeyClass_set (it adds _set in the name of foreign key class name(in lowercase), example below). We can perform CRUD on related object model, example below,
 
 ```python
 # model
